@@ -109,6 +109,12 @@ public class Recipe {
         return directions;
     }
 
+    public Recipe addIngredients(Ingredient ingredient){
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
+        return this;
+    }
+
     public void setDirections(String directions) {
         this.directions = directions;
     }
@@ -143,5 +149,6 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+        notes.setRecipe(this);
     }
 }
