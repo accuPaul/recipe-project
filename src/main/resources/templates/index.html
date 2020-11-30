@@ -7,5 +7,16 @@
 <body>
 <h1 th:text="Recipes">My Recipes!</h1>
 
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Description</th>
+    </tr>
+    <tr th:each="recipe: ${recipes}">
+        <td th:text="${recipe.getId()}">0</td>
+        <td th:text="${recipe.getDescription()}">fail</td>
+    </tr>
+</table>
+
 </body>
 </html>
