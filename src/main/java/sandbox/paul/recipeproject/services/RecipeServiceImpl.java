@@ -1,5 +1,6 @@
 package sandbox.paul.recipeproject.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import sandbox.paul.recipeproject.domain.Recipe;
 import sandbox.paul.recipeproject.repositories.RecipeRepository;
@@ -7,6 +8,7 @@ import sandbox.paul.recipeproject.repositories.RecipeRepository;
 import java.util.HashSet;
 import java.util.Set;
 
+@Slf4j
 @Service
 public class RecipeServiceImpl implements RecipeService {
 
@@ -18,6 +20,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public  Set<Recipe> getRecipes() {
+        log.debug("This is a Lomboc debugger");
         Set<Recipe> recipes = new HashSet<>();
 
         recipeRepository.findAll().iterator().forEachRemaining(recipes::add);
