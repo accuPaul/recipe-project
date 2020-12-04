@@ -31,11 +31,14 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Description</th>
+                                <th />
                             </tr>
                             </thead>
                             <tr th:each="recipe: ${recipes}">
+                                <!--/*@thymesVar id="recipe" type="sandbox.paul.domain.Recipe" */-->
                                 <td th:text="${recipe.getId()}">0</td>
                                 <td th:text="${recipe.getDescription()}">fail</td>
+                                <td><a href="#" th:href="@{'recipe/show/'+${recipe.id}}">View</a> </td>
                             </tr>
                         </table>
 
