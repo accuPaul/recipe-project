@@ -22,7 +22,15 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h1 class="panel-title pull-left">My Recipes</h1>
+                    <div class="row">
+                        <div class="col-md-11">
+                            <h1 class="panel-title" >My Recipes</h1>
+                        </div>
+                        <div class="col-md-1">
+                            <a class="btn-default" href="/recipe/new"
+                               role="button"><span class="glyphicon glyphicon-plus-sign"> </span></a>
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
@@ -40,9 +48,9 @@
                                 <!--/*@thymesVar id="recipe" type="sandbox.paul.domain.Recipe" */-->
                                 <td th:text="${recipe.getId()}">0</td>
                                 <td th:text="${recipe.getDescription()}">fail</td>
-                                <td><a href="#" th:href="@{'recipe/'+${recipe.id}+'/show'}">View</a> </td>
-                                <td><a href="#" th:href="@{'recipe/'+${recipe.id}+'/update'}">Update</a> </td>
-                                <td><a href="#" th:href="@{'recipe/'+${recipe.id}+'/delete'}">Delete</a> </td>
+                                <td><a href="#" th:href="@{'/recipe/'+${recipe.id}+'/show'}"><span class="glyphicon glyphicon-zoom-in"> </span></a> </td>
+                                <td><a href="#" th:href="@{'/recipe/'+${recipe.id}+'/update'}"><span class="glyphicon glyphicon-edit"> </span></a> </td>
+                                <td><a href="#" th:href="@{'/recipe/'+${recipe.id}+'/delete'}"><span class="glyphicon glyphicon-trash"></span> </a> </td>
                             </tr>
                         </table>
 
