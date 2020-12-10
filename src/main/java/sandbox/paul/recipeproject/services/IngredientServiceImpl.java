@@ -80,18 +80,30 @@ public class IngredientServiceImpl implements IngredientService {
                                 .findById(command.getUom().getId())
                                 .orElseThrow(() -> new RuntimeException("Uom Not Found")));
                     } else {
-
-                        recipeOptional.get().addIngredients(ingredientCommandToIngredient.convert(command));
+                        // add new Ingredient
+                        Ingredient ingredient = ingredientCommandToIngredient.convert(command);
+                        ingredient.setRecipe(recipeOptional.get());
+                        recipeOptional.get().addIngredients(ingredient);
                     }
                 }
 
                 Recipe savedRecipe = recipeRepository.save(recipeOptional.get());
+
+                Optional<Ingredient> savedIngredientOptional = savedRecipe.getIngredients().stream()
+                        .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getId()))
+                        .findFirst();
+
+                // If we did not find it by ID, let's try by description instead...
+                if (!savedIngredientOptional.isPresent()) {
+                    savedIngredientOptional = savedRecipe.getIngredients().stream()
+                            .filter(recipeIngredients -> recipeIngredients.getDescription().equals(command.getDescription()))
+                            .filter(recipeIngredients -> recipeIngredients.getAmount().equals(command.getAmount()))
+                            .filter(recipeIngredients -> recipeIngredients.getUom().getId().equals(command.getUom().getId()))
+                            .findFirst();
+                }
 ;
 //todo check for failure to find ingredients
-        return ingredientToIngredientCommand.convert(savedRecipe.getIngredients().stream()
-        .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getId()))
-                .findFirst()
-                .get());
+        return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
     }
 
     @Override

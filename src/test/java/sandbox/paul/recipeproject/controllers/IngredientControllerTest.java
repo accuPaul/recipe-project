@@ -94,6 +94,25 @@ public class IngredientControllerTest {
     }
 
     @Test
+    public void testNewIngredient() throws Exception {
+        //given -- we need a recipe to which to add this item
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        //when -- we need a call against the services to fetch a recipe and or list of UoM's
+        when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
+        when(unitOfMeasureService.listAllUoms()).thenReturn(new HashSet<>());
+
+        //then -- make a mock call to the url to see what wackiness ensues, this should yield both a UoM list and an ingredient
+        mockMvc.perform(get("/recipe/1/ingredient/new"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/ingredient/ingredientform"))
+                .andExpect(model().attributeExists("ingredient"))
+                .andExpect(model().attributeExists("uomList"));
+
+        verify(recipeService, times(1)).findCommandById(anyLong());
+    }
+    @Test
     public void saveOrUpdate() throws Exception {
         IngredientCommand command = new IngredientCommand();
         command.setRecipeId(1L);
